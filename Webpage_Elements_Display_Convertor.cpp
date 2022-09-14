@@ -1,3 +1,5 @@
+#define CURL_STATICLIB
+#include <curl/curl.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -61,7 +63,14 @@ std::vector<std::string> read_file()
 
 int main()
 {
-    generate_HTML_file(read_file());
+    //generate_HTML_file(read_file());
+
+    CURL* curl;
+
+    curl = curl_easy_init();
+    curl_easy_cleanup(curl);
+
+    return 0;
 
     // 1) Read text file with URLS
     // 2) Iterate through each URL to collect page elements.
