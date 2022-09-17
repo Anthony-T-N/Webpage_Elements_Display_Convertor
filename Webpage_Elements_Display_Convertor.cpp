@@ -8,6 +8,12 @@
 
 int generate_HTML_file(std::vector<std::string> input_file_line_vec)
 {
+    /*
+    const char* target_url = "";
+    //generate_HTML_file(read_file());
+    html_extractor(target_url);
+    */
+
     std::ifstream input_file;
     input_file.open("elements_webpage_template.html");
     std::ofstream output_file;
@@ -54,6 +60,7 @@ std::vector<std::string> read_file()
 
     while (std::getline(input_file, input_file_line))
     {
+        input_file_line = input_file_line.substr(input_file_line.find(',') + 1);
         std::cout << input_file_line << "\n";
         input_file_line_vec.push_back(input_file_line);
     }
@@ -67,32 +74,43 @@ static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* use
     return size * nmemb;
 }
 
-int main()
+void html_extractor(const char* target_url)
 {
-    //generate_HTML_file(read_file());
+    std::cout << target_url << "\n";
 
     CURL* curl;
     CURLcode res;
-    std::string readBuffer;
+    std::string stored_webpage;
 
     curl = curl_easy_init();
-    if (curl) 
+    if (curl)
     {
-        curl_easy_setopt(curl, CURLOPT_URL, "Test URL HERE");
+        curl_easy_setopt(curl, CURLOPT_URL, target_url);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &stored_webpage);
         res = curl_easy_perform(curl);
         curl_easy_cleanup(curl);
 
-        std::cout << readBuffer << std::endl;
+        std::cout << stored_webpage << std::endl;
     }
-    for (int i = 0; i <= readBuffer.size() - 1; i++)
+    std::string target_tag = stored_webpage.substr(stored_webpage.find("<h1"), stored_webpage.find("</h1>") - stored_webpage.find("<h1"));
+    std::cout << "Target_Tag: " << target_tag << "\n";
+    /*
+    for (int i = 0; i <= stored_webpage.size() - 1; i++)
     {
-        if (readBuffer[i].find("<") != std::string::npos)
+        "<h1 class = "title-name h1_bold_none"><strong>Hataraku Maou - sama!!< / strong>< / h1>"
+        if (stored_webpage[i] == 'c')
         {
             std::cout << "note" << std::endl;
         }
     }
+    */
+}
+
+int main()
+{
+    generate_HTML_file(read_file());
+    
     return 0;
 
     // 1) Read text file with URLS
