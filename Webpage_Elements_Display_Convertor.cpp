@@ -6,8 +6,15 @@
 #include <filesystem>
 #include <string>
 
+void html_extractor(const char* target_url);
+
 int generate_HTML_file(std::vector<std::string> input_file_line_vec)
 {
+    for (int i = 0; i <= input_file_line_vec.size() - 1; i++)
+    {
+        html_extractor(input_file_line_vec[i].c_str());
+    }
+    return 0;
     /*
     const char* target_url = "";
     //generate_HTML_file(read_file());
@@ -90,15 +97,19 @@ void html_extractor(const char* target_url)
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &stored_webpage);
         res = curl_easy_perform(curl);
         curl_easy_cleanup(curl);
-
-        std::cout << stored_webpage << std::endl;
+        // std::cout << stored_webpage << std::endl;
     }
     std::string target_tag = stored_webpage.substr(stored_webpage.find("<h1"), stored_webpage.find("</h1>") - stored_webpage.find("<h1"));
+    target_tag = target_tag.substr(target_tag.find("<strong>") + 8, target_tag.find("</strong>") - target_tag.find("<strong>") - 8);
     std::cout << "Target_Tag: " << target_tag << "\n";
+    std::string target_image = stored_webpage.substr(stored_webpage.find("lazyload"));
+    target_image = target_image.substr(target_image.find("data-src=\"") + 10, target_image.find("\" alt=") - target_image.find("data-src=\"") - 10);
+    std::cout << "Target_Image: " << target_image << "\n\n";
     /*
     for (int i = 0; i <= stored_webpage.size() - 1; i++)
     {
-        "<h1 class = "title-name h1_bold_none"><strong>Hataraku Maou - sama!!< / strong>< / h1>"
+        <h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Seymour Hersh</span></h1>
+        <h1 class="_1EAJU hMmqO WL4Yr n-Wqw _18EFj _2ZOIT _3HiTE x9R1x pDrMR hmFfs _390V1" data-component="Heading">Whistleblower</h1>
         if (stored_webpage[i] == 'c')
         {
             std::cout << "note" << std::endl;
