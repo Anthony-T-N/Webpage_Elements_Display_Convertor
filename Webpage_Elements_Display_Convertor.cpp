@@ -6,15 +6,18 @@
 #include <filesystem>
 #include <string>
 
-void html_extractor(const char* target_url);
+std::vector<std::string> html_extractor(const char* target_url);
 
 int generate_HTML_file(std::vector<std::string> input_file_line_vec)
 {
+    std::vector<std::string> extracted_strings;
+
+    /*
     for (int i = 0; i <= input_file_line_vec.size() - 1; i++)
     {
-        html_extractor(input_file_line_vec[i].c_str());
+        extracted_strings = html_extractor(input_file_line_vec[i].c_str());
     }
-    return 0;
+    */
     /*
     const char* target_url = "";
     //generate_HTML_file(read_file());
@@ -32,15 +35,17 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
         std::string input_file_line;
         while (std::getline(input_file, input_file_line))
         {
-            if (input_file_line.find("<tbody>") != std::string::npos)
+            if (input_file_line.find("<div class=\"row\">") != std::string::npos)
             {
-                std::cout << "<tbody> found" << "\n";
+                std::cout << "<div class=\"row\"> found" << "\n";
                 for (int i = 0; i <= input_file_line_vec.size() - 1; i++)
                 {
+                    extracted_strings = html_extractor(input_file_line_vec[i].c_str());
                     //std::string test = "<tr><td style=\"width:50 % \"><h3>Title 1</h3></td><td>&nbsp;</td><td style=\"width : 50 % \"><h3>Title 2</h3></td></tr><tr><td><p>" + input_file_line_vec[i] + "</p><p>&nbsp;</p><p>&nbsp;</p></td><td>&nbsp;</td><td><p>" + input_file_line_vec[i] + "</p><p>&nbsp;</p><p>&nbsp;</p></td></tr>";
                     //std::cout << input_file_line_vec[i] << "\n";
                     //std::cout << test << "\n";
-                    output_file << "<tr><td style=\"width:50 % \"><h3>Title 1</h3></td><td>&nbsp;</td><td style=\"width : 50 % \"><h3>Title 2</h3></td></tr><tr><td><p>" + input_file_line_vec[i] + "</p><p>&nbsp;</p><p>&nbsp;</p></td><td>&nbsp;</td><td><p>" + input_file_line_vec[i] + "</p><p>&nbsp;</p><p>&nbsp;</p></td></tr>" << "\n";
+                    //output_file << "<tr><td style=\"width:50 % \"><h3>" + extracted_strings[0] + "</h3></td><td>&nbsp;</td><td style=\"width : 50 % \"><h3>Title 2</h3></td></tr><tr><td><p>SAMPLE TEXT COL 1</p><p>&nbsp;</p><p>&nbsp;</p></td><td>&nbsp;</td><td><p>SAMPLE TEXT COL 2</p><p>&nbsp;</p><p>&nbsp;</p></td></tr>" << "\n";
+                    output_file << "<div class=\"column\" style=\"background-color:#aaa;\"><h2>" + extracted_strings[0] + "</h2><p>" + extracted_strings[1] + "</p></div>" << "\n";
                 }
             }
             else
@@ -81,7 +86,7 @@ static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* use
     return size * nmemb;
 }
 
-void html_extractor(const char* target_url)
+std::vector<std::string> html_extractor(const char* target_url)
 {
     std::cout << target_url << "\n";
 
@@ -105,6 +110,11 @@ void html_extractor(const char* target_url)
     std::string target_image = stored_webpage.substr(stored_webpage.find("lazyload"));
     target_image = target_image.substr(target_image.find("data-src=\"") + 10, target_image.find("\" alt=") - target_image.find("data-src=\"") - 10);
     std::cout << "Target_Image: " << target_image << "\n\n";
+    
+    std::vector<std::string> extracted_strings = { target_tag , target_image };
+    
+    return extracted_strings;
+
     /*
     for (int i = 0; i <= stored_webpage.size() - 1; i++)
     {
