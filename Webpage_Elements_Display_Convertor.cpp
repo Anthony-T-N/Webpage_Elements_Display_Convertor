@@ -38,6 +38,7 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
             if (input_file_line.find("<div class=\"row\">") != std::string::npos)
             {
                 std::cout << "<div class=\"row\"> found" << "\n";
+                output_file << input_file_line << "\n";
                 for (int i = 0; i <= input_file_line_vec.size() - 1; i++)
                 {
                     extracted_strings = html_extractor(input_file_line_vec[i].c_str());
@@ -45,7 +46,7 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
                     //std::cout << input_file_line_vec[i] << "\n";
                     //std::cout << test << "\n";
                     //output_file << "<tr><td style=\"width:50 % \"><h3>" + extracted_strings[0] + "</h3></td><td>&nbsp;</td><td style=\"width : 50 % \"><h3>Title 2</h3></td></tr><tr><td><p>SAMPLE TEXT COL 1</p><p>&nbsp;</p><p>&nbsp;</p></td><td>&nbsp;</td><td><p>SAMPLE TEXT COL 2</p><p>&nbsp;</p><p>&nbsp;</p></td></tr>" << "\n";
-                    output_file << "<div class=\"column\" style=\"background-color:#aaa;\"><h2>" + extracted_strings[0] + "</h2><p>" + extracted_strings[1] + "</p></div>" << "\n";
+                    output_file << "<div class=\"column\" style=\"background-color:#aaa;display:inline-block;\"><h2>" + extracted_strings[0] + "</h2><div><img src=\"" + extracted_strings[1] + "\"></div><div>SAMPLE TEXT SAMPLE TEXT</div></div>" << "\n";
                 }
             }
             else
