@@ -27,10 +27,10 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
     std::ifstream input_file;
     input_file.open("elements_webpage_template.html");
     std::ofstream output_file;
-    if (std::filesystem::exists("test.html") == true)
+    if (std::filesystem::exists("elements_list.html") == true)
     {
         std::cout << "[!] Creating/opening List.csv;" << "\n";
-        output_file.open("test.html");
+        output_file.open("elements_list.html");
         std::cout << "[+] Opened List.csv successfully;" << "\n";
         std::string input_file_line;
         while (std::getline(input_file, input_file_line))
@@ -42,11 +42,24 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
                 for (int i = 0; i <= input_file_line_vec.size() - 1; i++)
                 {
                     extracted_strings = html_extractor(input_file_line_vec[i].c_str());
+                   
+                    std::string color;
+
+                    if (i % 2 == 0)
+                    {
+                        color = "#34495E";
+                    }
+                    else
+                    {
+                        color = "#273746";
+                    }
+
                     //std::string test = "<tr><td style=\"width:50 % \"><h3>Title 1</h3></td><td>&nbsp;</td><td style=\"width : 50 % \"><h3>Title 2</h3></td></tr><tr><td><p>" + input_file_line_vec[i] + "</p><p>&nbsp;</p><p>&nbsp;</p></td><td>&nbsp;</td><td><p>" + input_file_line_vec[i] + "</p><p>&nbsp;</p><p>&nbsp;</p></td></tr>";
                     //std::cout << input_file_line_vec[i] << "\n";
                     //std::cout << test << "\n";
                     //output_file << "<tr><td style=\"width:50 % \"><h3>" + extracted_strings[0] + "</h3></td><td>&nbsp;</td><td style=\"width : 50 % \"><h3>Title 2</h3></td></tr><tr><td><p>SAMPLE TEXT COL 1</p><p>&nbsp;</p><p>&nbsp;</p></td><td>&nbsp;</td><td><p>SAMPLE TEXT COL 2</p><p>&nbsp;</p><p>&nbsp;</p></td></tr>" << "\n";
-                    output_file << "<div class=\"column\" style=\"background-color:#aaa;display:inline-block;\"><h2>" + extracted_strings[0] + "</h2><div><img src=\"" + extracted_strings[1] + "\"></div><div>SAMPLE TEXT SAMPLE TEXT</div></div>" << "\n";
+                    output_file << "<div class=\"column\" style=\"background-color:" + color + ";\">" << "\n" << "<img style=\"margin-right:10px;display:block;\" src=\"" + extracted_strings[1] + "\">" << "\n" << "<div class=\"text\"><h3 style=\"color:white;\">" + extracted_strings[0] + "</h2><p style=\"color:white;\">" + extracted_strings[2] + "</p>" << "\n" << "</div>" << "\n" << "</div>" << "\n\n";
+                    //output_file << "<div class=\"column\" style=\"background-color:#aaa;display:inline-block;\"><h2>" + extracted_strings[0] + "</h2><div><img src=\"" + extracted_strings[1] + "\"></div><div>SAMPLE TEXT SAMPLE TEXT</div></div>" << "\n";
                 }
             }
             else
@@ -108,11 +121,16 @@ std::vector<std::string> html_extractor(const char* target_url)
     std::string target_tag = stored_webpage.substr(stored_webpage.find("<h1"), stored_webpage.find("</h1>") - stored_webpage.find("<h1"));
     target_tag = target_tag.substr(target_tag.find("<strong>") + 8, target_tag.find("</strong>") - target_tag.find("<strong>") - 8);
     std::cout << "Target_Tag: " << target_tag << "\n";
+
     std::string target_image = stored_webpage.substr(stored_webpage.find("lazyload"));
     target_image = target_image.substr(target_image.find("data-src=\"") + 10, target_image.find("\" alt=") - target_image.find("data-src=\"") - 10);
-    std::cout << "Target_Image: " << target_image << "\n\n";
+    std::cout << "Target_Image: " << target_image << "\n";
+
+    std::string target_desc = stored_webpage.substr(stored_webpage.find("<p itemprop=\"description\">"));
+    target_desc = target_desc.substr(target_desc.find("<p itemprop=\"description\">") + 26, target_desc.find("</p>") - target_desc.find("<p itemprop=\"description\">") - 22);
+    std::cout << "Target_Desc: " << target_desc << "\n\n";
     
-    std::vector<std::string> extracted_strings = { target_tag , target_image };
+    std::vector<std::string> extracted_strings = { target_tag , target_image, target_desc };
     
     return extracted_strings;
 
