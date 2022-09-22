@@ -11,19 +11,6 @@ std::vector<std::string> html_extractor(const char* target_url);
 int generate_HTML_file(std::vector<std::string> input_file_line_vec)
 {
     std::vector<std::string> extracted_strings;
-
-    /*
-    for (int i = 0; i <= input_file_line_vec.size() - 1; i++)
-    {
-        extracted_strings = html_extractor(input_file_line_vec[i].c_str());
-    }
-    */
-    /*
-    const char* target_url = "";
-    //generate_HTML_file(read_file());
-    html_extractor(target_url);
-    */
-
     std::ifstream input_file;
     input_file.open("elements_webpage_template.html");
     std::ofstream output_file;
@@ -53,12 +40,11 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
                     {
                         color = "#273746";
                     }
-
-                    //std::string test = "<tr><td style=\"width:50 % \"><h3>Title 1</h3></td><td>&nbsp;</td><td style=\"width : 50 % \"><h3>Title 2</h3></td></tr><tr><td><p>" + input_file_line_vec[i] + "</p><p>&nbsp;</p><p>&nbsp;</p></td><td>&nbsp;</td><td><p>" + input_file_line_vec[i] + "</p><p>&nbsp;</p><p>&nbsp;</p></td></tr>";
-                    //std::cout << input_file_line_vec[i] << "\n";
-                    //std::cout << test << "\n";
                     //output_file << "<tr><td style=\"width:50 % \"><h3>" + extracted_strings[0] + "</h3></td><td>&nbsp;</td><td style=\"width : 50 % \"><h3>Title 2</h3></td></tr><tr><td><p>SAMPLE TEXT COL 1</p><p>&nbsp;</p><p>&nbsp;</p></td><td>&nbsp;</td><td><p>SAMPLE TEXT COL 2</p><p>&nbsp;</p><p>&nbsp;</p></td></tr>" << "\n";
-                    output_file << "<div class=\"column\" style=\"background-color:" + color + ";\">" << "\n" << "<img style=\"margin-right:10px;display:block;\" src=\"" + extracted_strings[1] + "\">" << "\n" << "<div class=\"text\"><h3 style=\"color:white;\">" + extracted_strings[0] + "</h2><p style=\"color:white;\">" + extracted_strings[2] + "</p>" << "\n" << "</div>" << "\n" << "</div>" << "\n\n";
+                    output_file << "<div class=\"column\" style=\"background-color:" + color + ";display:flex;\">" << "\n" 
+                        << "<img style=\"margin-right:10px;display:block;height:445px;\" src=\"" + extracted_strings[1] + "\">" << "\n" 
+                        << "<div class=\"text\"><h3 style=\"color:white;\"><a href=" + input_file_line_vec[i] + ">" + extracted_strings[0] + "</a></h2><p style=\"color:white;\">" + extracted_strings[2] + "</p>" << "\n" 
+                        << "</div>" << "\n" << "</div>" << "\n\n";
                     //output_file << "<div class=\"column\" style=\"background-color:#aaa;display:inline-block;\"><h2>" + extracted_strings[0] + "</h2><div><img src=\"" + extracted_strings[1] + "\"></div><div>SAMPLE TEXT SAMPLE TEXT</div></div>" << "\n";
                 }
             }
@@ -133,18 +119,6 @@ std::vector<std::string> html_extractor(const char* target_url)
     std::vector<std::string> extracted_strings = { target_tag , target_image, target_desc };
     
     return extracted_strings;
-
-    /*
-    for (int i = 0; i <= stored_webpage.size() - 1; i++)
-    {
-        <h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">Seymour Hersh</span></h1>
-        <h1 class="_1EAJU hMmqO WL4Yr n-Wqw _18EFj _2ZOIT _3HiTE x9R1x pDrMR hmFfs _390V1" data-component="Heading">Whistleblower</h1>
-        if (stored_webpage[i] == 'c')
-        {
-            std::cout << "note" << std::endl;
-        }
-    }
-    */
 }
 
 int main()
