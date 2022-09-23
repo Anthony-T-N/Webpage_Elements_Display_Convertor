@@ -14,51 +14,45 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
     std::ifstream input_file;
     input_file.open("elements_webpage_template.html");
     std::ofstream output_file;
-    if (std::filesystem::exists("elements_list.html") == true)
+    std::cout << "[!] Creating/opening List.csv;" << "\n";
+    output_file.open("elements_list_output.html");
+    std::cout << "[+] Opened List.csv successfully;" << "\n";
+    std::string input_file_line;
+    while (std::getline(input_file, input_file_line))
     {
-        std::cout << "[!] Creating/opening List.csv;" << "\n";
-        output_file.open("elements_list.html");
-        std::cout << "[+] Opened List.csv successfully;" << "\n";
-        std::string input_file_line;
-        while (std::getline(input_file, input_file_line))
+        if (input_file_line.find("<div class=\"row\">") != std::string::npos)
         {
-            if (input_file_line.find("<div class=\"row\">") != std::string::npos)
+            std::cout << "<div class=\"row\"> found" << "\n";
+            output_file << input_file_line << "\n";
+            for (int i = 0; i <= input_file_line_vec.size() - 1; i++)
             {
-                std::cout << "<div class=\"row\"> found" << "\n";
-                output_file << input_file_line << "\n";
-                for (int i = 0; i <= input_file_line_vec.size() - 1; i++)
+                extracted_strings = html_extractor(input_file_line_vec[i].c_str());
+                std::string color;
+                if (i % 2 == 0)
                 {
-                    extracted_strings = html_extractor(input_file_line_vec[i].c_str());
-                   
-                    std::string color;
-
-                    if (i % 2 == 0)
-                    {
-                        color = "#34495E";
-                    }
-                    else
-                    {
-                        color = "#273746";
-                    }
-                    //output_file << "<tr><td style=\"width:50 % \"><h3>" + extracted_strings[0] + "</h3></td><td>&nbsp;</td><td style=\"width : 50 % \"><h3>Title 2</h3></td></tr><tr><td><p>SAMPLE TEXT COL 1</p><p>&nbsp;</p><p>&nbsp;</p></td><td>&nbsp;</td><td><p>SAMPLE TEXT COL 2</p><p>&nbsp;</p><p>&nbsp;</p></td></tr>" << "\n";
-                    output_file << "<div class=\"column\" style=\"background-color:" + color + ";display:flex;\">" << "\n" 
-                        << "<img style=\"margin-right:10px;display:block;height:445px;\" src=\"" + extracted_strings[1] + "\">" << "\n" 
-                        << "<div class=\"text\"><h3 style=\"color:white;\"><a href=" + input_file_line_vec[i] + ">" + extracted_strings[0] + "</a></h2><p style=\"color:white;\">" + extracted_strings[2] + "</p>" << "\n" 
-                        << "</div>" << "\n" << "</div>" << "\n\n";
-                    //output_file << "<div class=\"column\" style=\"background-color:#aaa;display:inline-block;\"><h2>" + extracted_strings[0] + "</h2><div><img src=\"" + extracted_strings[1] + "\"></div><div>SAMPLE TEXT SAMPLE TEXT</div></div>" << "\n";
+                    color = "#34495E";
                 }
+                else
+                {
+                    color = "#273746";
+                }
+                //output_file << "<tr><td style=\"width:50 % \"><h3>" + extracted_strings[0] + "</h3></td><td>&nbsp;</td><td style=\"width : 50 % \"><h3>Title 2</h3></td></tr><tr><td><p>SAMPLE TEXT COL 1</p><p>&nbsp;</p><p>&nbsp;</p></td><td>&nbsp;</td><td><p>SAMPLE TEXT COL 2</p><p>&nbsp;</p><p>&nbsp;</p></td></tr>" << "\n";
+                output_file << "<div class=\"column\" style=\"background-color:" + color + ";display:flex;\">" << "\n" 
+                    << "<img style=\"margin-right:10px;display:block;height:445px;\" src=\"" + extracted_strings[1] + "\">" << "\n" 
+                    << "<div class=\"text\"><h3 style=\"color:white;\"><a href=" + input_file_line_vec[i] + ">" + extracted_strings[0] + "</a></h2><p style=\"color:white;\">" + extracted_strings[2] + "</p>" << "\n" 
+                    << "</div>" << "\n" << "</div>" << "\n\n";
+                //output_file << "<div class=\"column\" style=\"background-color:#aaa;display:inline-block;\"><h2>" + extracted_strings[0] + "</h2><div><img src=\"" + extracted_strings[1] + "\"></div><div>SAMPLE TEXT SAMPLE TEXT</div></div>" << "\n";
             }
-            else
-            {
-                output_file << input_file_line << "\n";
-            }
-            std::cout << input_file_line << "\n";
-
         }
-        input_file.close();
-        output_file.close();
-        return 0;
+        else
+        {
+            output_file << input_file_line << "\n";
+        }
+        std::cout << input_file_line << "\n";
+
     }
+    input_file.close();
+    output_file.close();
     return 0;
 }
 
