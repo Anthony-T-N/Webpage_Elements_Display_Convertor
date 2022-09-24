@@ -36,12 +36,10 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
                 {
                     color = "#273746";
                 }
-                //output_file << "<tr><td style=\"width:50 % \"><h3>" + extracted_strings[0] + "</h3></td><td>&nbsp;</td><td style=\"width : 50 % \"><h3>Title 2</h3></td></tr><tr><td><p>SAMPLE TEXT COL 1</p><p>&nbsp;</p><p>&nbsp;</p></td><td>&nbsp;</td><td><p>SAMPLE TEXT COL 2</p><p>&nbsp;</p><p>&nbsp;</p></td></tr>" << "\n";
-                output_file << "<div class=\"column\" style=\"background-color:" + color + ";display:flex;\">" << "\n" 
+                output_file << "<div class=\"column\" style=\"background-color:" + color + ";display:flex;\">" << "\n"
                     << "<img style=\"margin-right:10px;display:block;height:445px;\" src=\"" + extracted_strings[1] + "\">" << "\n" 
                     << "<div class=\"text\"><h3 style=\"color:white;\"><a href=" + input_file_line_vec[i] + ">" + extracted_strings[0] + "</a></h2><p style=\"color:white;\">" + extracted_strings[2] + "</p>" << "\n" 
                     << "</div>" << "\n" << "</div>" << "\n\n";
-                //output_file << "<div class=\"column\" style=\"background-color:#aaa;display:inline-block;\"><h2>" + extracted_strings[0] + "</h2><div><img src=\"" + extracted_strings[1] + "\"></div><div>SAMPLE TEXT SAMPLE TEXT</div></div>" << "\n";
             }
         }
         else
@@ -117,6 +115,13 @@ std::vector<std::string> html_extractor(const char* target_url)
 
 int main()
 {
+    std::cout << "=======================================" << "\n";
+    std::cout << "- Webpage_Elements_Display_Convertor console application" << "\n";
+    std::cout << "- Console Application Version: 1.0" << "\n";
+    std::cout << "- Created By: Anthony-T-N." << "\n";
+    std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
+    std::cout << "=======================================" << "\n\n";
+
     generate_HTML_file(read_file());
     
     return 0;
