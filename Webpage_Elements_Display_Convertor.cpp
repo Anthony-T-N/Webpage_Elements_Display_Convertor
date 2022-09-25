@@ -14,9 +14,9 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
     std::ifstream input_file;
     input_file.open("elements_webpage_template.html");
     std::ofstream output_file;
-    std::cout << "[!] Creating/opening List.csv;" << "\n";
+    std::cout << "\n" << "[!] Creating/opening List.csv;" << "\n";
     output_file.open("elements_list_output.html");
-    std::cout << "[+] Opened List.csv successfully;" << "\n";
+    std::cout << "[+] Opened List.csv successfully;" << "\n\n";
     std::string input_file_line;
     while (std::getline(input_file, input_file_line))
     {
@@ -62,6 +62,7 @@ std::vector<std::string> read_file()
     std::vector<std::string> input_file_line_vec;
     std::string input_file_line;
 
+    std::cout << "URL List:" << "\n";
     while (std::getline(input_file, input_file_line))
     {
         input_file_line = input_file_line.substr(input_file_line.find(',') + 1);
@@ -94,7 +95,6 @@ std::vector<std::string> html_extractor(const char* target_url)
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &stored_webpage);
         res = curl_easy_perform(curl);
         curl_easy_cleanup(curl);
-        // std::cout << stored_webpage << std::endl;
     }
     std::string target_tag = stored_webpage.substr(stored_webpage.find("<h1"), stored_webpage.find("</h1>") - stored_webpage.find("<h1"));
     target_tag = target_tag.substr(target_tag.find("<strong>") + 8, target_tag.find("</strong>") - target_tag.find("<strong>") - 8);
