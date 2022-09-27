@@ -122,29 +122,40 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
 
+    /*
     std::cout << "> ";
     std::string user_input;
     std::getline(std::cin, user_input);
-    if (user_input == "Bookmark Extract")
+    */
+
+    std::ifstream input_file;
+    input_file.open("Bookmarks.txt");
+
+    std::ifstream magic_file;
+    magic_file.open("magic_logic.txt");
+
+    std::vector<std::string> input_file_line_vec;
+    std::string input_file_line;
+    std::string magic_logic;
+
+    while (std::getline(magic_file, input_file_line))
     {
-        std::ifstream input_file;
-        input_file.open("Bookmarks.txt");
-
-        std::vector<std::string> input_file_line_vec;
-        std::string input_file_line;
-
-        while (std::getline(input_file, input_file_line))
-        {
-            input_file_line = input_file_line.substr(input_file_line.find(',') + 1);
-            std::cout << input_file_line << "\n";
-            input_file_line_vec.push_back(input_file_line);
-        }
-        input_file.close();
-        return 0;
+        magic_logic = input_file_line;
+        std::cout << "Magic Logic: " << magic_logic << "\n";
     }
+    magic_file.close();
 
-    generate_HTML_file(read_file());
-    
+    while (std::getline(input_file, input_file_line))
+    {
+        input_file_line = input_file_line.substr(input_file_line.find(magic_logic) + 1);
+        std::cout << input_file_line << "\n";
+        input_file_line_vec.push_back(input_file_line);
+    }
+    input_file.close();
+    std::cout << "DONE" << "\n";
+    return 0;
+
+    //generate_HTML_file(read_file());
     return 0;
 
     // 1) Read text file with URLS
