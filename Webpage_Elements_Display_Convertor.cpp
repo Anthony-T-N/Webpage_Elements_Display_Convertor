@@ -145,16 +145,26 @@ int main()
     }
     magic_file.close();
 
+    int i = 0;
     while (std::getline(input_file, input_file_line))
     {
-        input_file_line = input_file_line.substr(input_file_line.find(magic_logic) + 1);
-        std::cout << input_file_line << "\n";
-        input_file_line_vec.push_back(input_file_line);
+        if (input_file_line.find(magic_logic) != std::string::npos)
+        {
+            input_file_line = input_file_line.substr(input_file_line.find(magic_logic) + 1);
+            input_file_line = input_file_line.substr(input_file_line.find(magic_logic) + 1, input_file_line.find("\""));
+            std::cout << i << ") " << input_file_line << "\n";
+            input_file_line_vec.push_back(input_file_line);
+            i++;
+        }
+        else
+        {
+            std::cout << "[-]" << input_file_line.substr(0, 100) << "\n";
+        }
     }
     input_file.close();
-    std::cout << "DONE" << "\n";
-    return 0;
+    std::cout << "\n" << "DONE" << "\n";
 
+    // std::vector<std::string> input_file_line_vec
     //generate_HTML_file(read_file());
     return 0;
 
