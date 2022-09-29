@@ -18,6 +18,7 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
     output_file.open("elements_list_output.html");
     std::cout << "[+] Opened List.csv successfully;" << "\n\n";
     std::string input_file_line;
+    int count = 0;
     while (std::getline(input_file, input_file_line))
     {
         if (input_file_line.find("<div class=\"row\">") != std::string::npos)
@@ -26,6 +27,8 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
             output_file << input_file_line << "\n";
             for (int i = 0; i <= input_file_line_vec.size() - 1; i++)
             {
+                std::cout << count << "|" << input_file_line_vec.size() << ") ";
+                count++;
                 extracted_strings = html_extractor(input_file_line_vec[i].c_str());
                 std::string color;
                 if (i % 2 == 0)
@@ -46,7 +49,6 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
         {
             output_file << input_file_line << "\n";
         }
-        std::cout << input_file_line << "\n";
 
     }
     input_file.close();
@@ -96,21 +98,32 @@ std::vector<std::string> html_extractor(const char* target_url)
         res = curl_easy_perform(curl);
         curl_easy_cleanup(curl);
     }
-    std::string target_tag = stored_webpage.substr(stored_webpage.find("<h1"), stored_webpage.find("</h1>") - stored_webpage.find("<h1"));
-    target_tag = target_tag.substr(target_tag.find("<strong>") + 8, target_tag.find("</strong>") - target_tag.find("<strong>") - 8);
-    std::cout << "Target_Tag: " << target_tag << "\n";
 
-    std::string target_image = stored_webpage.substr(stored_webpage.find("lazyload"));
-    target_image = target_image.substr(target_image.find("data-src=\"") + 10, target_image.find("\" alt=") - target_image.find("data-src=\"") - 10);
-    std::cout << "Target_Image: " << target_image << "\n";
+    try
+    {
+        std::string target_tag = stored_webpage.substr(stored_webpage.find("<h1"), stored_webpage.find("</h1>") - stored_webpage.find("<h1"));
+        target_tag = target_tag.substr(target_tag.find("<strong>") + 8, target_tag.find("</strong>") - target_tag.find("<strong>") - 8);
+        std::cout << "Target_Tag: " << target_tag << "\n";
 
-    std::string target_desc = stored_webpage.substr(stored_webpage.find("<p itemprop=\"description\">"));
-    target_desc = target_desc.substr(target_desc.find("<p itemprop=\"description\">") + 26, target_desc.find("</p>") - target_desc.find("<p itemprop=\"description\">") - 22);
-    std::cout << "Target_Desc: " << target_desc << "\n\n";
+        std::string target_image = stored_webpage.substr(stored_webpage.find("lazyload"));
+        target_image = target_image.substr(target_image.find("data-src=\"") + 10, target_image.find("\" alt=") - target_image.find("data-src=\"") - 10);
+        std::cout << "Target_Image: " << target_image << "\n";
+
+        std::string target_desc = stored_webpage.substr(stored_webpage.find("<p itemprop=\"description\">"));
+        target_desc = target_desc.substr(target_desc.find("<p itemprop=\"description\">") + 26, target_desc.find("</p>") - target_desc.find("<p itemprop=\"description\">") - 22);
+        //std::cout << "Target_Desc: " << target_desc << "\n\n";
+
+        //std::cout << "\n";
+
+        std::vector<std::string> extracted_strings = { target_tag , target_image, target_desc };
+
+        return extracted_strings;
+    }
+    catch (const std::out_of_range& out_of_range)
+    {
+        std::cerr << "Out_of_range Error : " << out_of_range.what() << '\n';
+    }
     
-    std::vector<std::string> extracted_strings = { target_tag , target_image, target_desc };
-    
-    return extracted_strings;
 }
 
 int main()
@@ -150,8 +163,8 @@ int main()
     {
         if (input_file_line.find(magic_logic) != std::string::npos)
         {
-            input_file_line = input_file_line.substr(input_file_line.find(magic_logic) + 1);
-            input_file_line = input_file_line.substr(input_file_line.find(magic_logic) + 1, input_file_line.find("\""));
+            input_file_line = input_file_line.substr(input_file_line.find(magic_logic));
+            input_file_line = input_file_line.substr(input_file_line.find(magic_logic), input_file_line.find("\""));
             std::cout << i << ") " << input_file_line << "\n";
             input_file_line_vec.push_back(input_file_line);
             i++;
@@ -166,6 +179,7 @@ int main()
 
     // std::vector<std::string> input_file_line_vec
     //generate_HTML_file(read_file());
+    generate_HTML_file(input_file_line_vec);
     return 0;
 
     // 1) Read text file with URLS
