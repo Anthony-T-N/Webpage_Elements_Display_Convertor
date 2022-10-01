@@ -50,11 +50,15 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
                     << "</div>" << "\n" << "</div>" << "\n\n";
             }
         }
+        else if (input_file_line.find("<p>Footer</p>") != std::string::npos)
+        {
+            std::cout << "<p>Footer</p> found" << "\n";
+            output_file << "Total Count: " << count << "\n";
+        }
         else
         {
             output_file << input_file_line << "\n";
         }
-
     }
     input_file.close();
     output_file.close();
@@ -118,7 +122,7 @@ std::vector<std::string> html_extractor(const char* target_url)
         target_desc = target_desc.substr(target_desc.find("<p itemprop=\"description\">") + 26, target_desc.find("</p>") - target_desc.find("<p itemprop=\"description\">") - 22);
         //std::cout << "Target_Desc: " << target_desc << "\n\n";
 
-        //std::cout << "\n";
+        std::cout << "\n";
 
         std::vector<std::string> extracted_strings = { target_tag , target_image, target_desc };
 
@@ -181,11 +185,14 @@ int main()
         }
     }
     input_file.close();
-    std::cout << "\n" << "DONE" << "\n";
 
     // std::vector<std::string> input_file_line_vec
     //generate_HTML_file(read_file());
     generate_HTML_file(input_file_line_vec);
+
+    std::cout << "[!] END" << "\n";
+    std::cout << "[!] Exiting..." << "\n\n";
+    std::cin.get();
     return 0;
 
     // 1) Read text file with URLS
