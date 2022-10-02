@@ -150,6 +150,12 @@ int main()
     std::getline(std::cin, user_input);
     */
 
+    std::string path = std::filesystem::current_path().generic_string();
+    for (const auto& entry : std::filesystem::directory_iterator(path))
+    {
+        std::cout << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << "\n";
+    }
+
     std::ifstream input_file;
     input_file.open("Bookmarks.txt");
 
