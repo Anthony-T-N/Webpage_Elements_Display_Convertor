@@ -144,17 +144,16 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
 
-    /*
-    std::cout << "> ";
-    std::string user_input;
-    std::getline(std::cin, user_input);
-    */
-
+    std::string selected_path = "";
     std::string path = std::filesystem::current_path().generic_string();
     for (const auto& entry : std::filesystem::directory_iterator(path))
     {
         std::cout << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << "\n";
     }
+    
+    std::cout << "> ";
+    std::string user_input;
+    std::getline(std::cin, user_input);
 
     std::ifstream input_file;
     input_file.open("Bookmarks.txt");
