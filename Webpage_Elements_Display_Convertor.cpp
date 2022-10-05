@@ -144,11 +144,12 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
 
-    std::string selected_path = "";
+    std::<std::string> path_list;
     std::string path = std::filesystem::current_path().generic_string();
     for (const auto& entry : std::filesystem::directory_iterator(path))
     {
         std::cout << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << "\n";
+        path_list.push_back(entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1));
     }
     
     std::cout << "> ";
@@ -156,7 +157,7 @@ int main()
     std::getline(std::cin, user_input);
 
     std::ifstream input_file;
-    input_file.open("Bookmarks.txt");
+    input_file.open(user_input);
 
     std::ifstream magic_file;
     magic_file.open("magic_logic.txt");
