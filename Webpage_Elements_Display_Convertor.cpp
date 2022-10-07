@@ -5,6 +5,7 @@
 #include <vector>
 #include <filesystem>
 #include <string>
+#include <map>
 
 std::vector<std::string> html_extractor(const char* target_url);
 
@@ -144,18 +145,22 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
 
+    std::map<int, std::string> path_list_map;
     std::vector<std::string> path_list;
     std::string path = std::filesystem::current_path().generic_string();
+    int iteration = 0;
     for (const auto& entry : std::filesystem::directory_iterator(path))
     {
         if ((entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)).find(".txt") != std::string::npos)
         {
-            std::cout << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << "\n";
+            std::cout << "[" << iteration << "] " << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << "\n";
             path_list.push_back(entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1));
+            path_list_map.insert(std::make_pair(iteration, entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)));
+            iteration++;
         }
     }
 
-    std::cout << "> ";
+    std::cout << "\n" << "> ";
     std::string user_input;
     std::getline(std::cin, user_input);
 
