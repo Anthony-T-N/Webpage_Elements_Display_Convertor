@@ -160,12 +160,20 @@ int main()
         }
     }
 
+    for (auto const& [key, val] : path_list_map)
+    {
+        std::cout << key << ':' << val << std::endl;
+    }
+
     std::cout << "\n" << "> ";
     std::string user_input;
     std::getline(std::cin, user_input);
 
+    std::cout << path_list_map[std::stoi(user_input)] << "\n";
+
     std::ifstream input_file;
-    input_file.open(user_input);
+    //input_file.open(path_list_map[std::stoi(user_input)]);
+    input_file.open("Bookmarks.txt");
 
     std::ifstream magic_file;
     magic_file.open("magic_logic.txt");
