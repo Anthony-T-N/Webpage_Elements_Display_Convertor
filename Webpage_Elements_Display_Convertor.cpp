@@ -15,9 +15,9 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
     std::ifstream input_file;
     input_file.open("elements_webpage_template.html");
     std::ofstream output_file;
-    std::cout << "\n" << "[!] Creating/opening List.csv;" << "\n";
+    std::cout << "\n" << "[!] Creating/opening List.csv;" << "\n"; // << TODO
     output_file.open("elements_list_output.html");
-    std::cout << "[+] Opened List.csv successfully;" << "\n\n";
+    std::cout << "[+] Opened List.csv successfully;" << "\n\n"; // << TODO
     std::string input_file_line;
     int count = 0;
     while (std::getline(input_file, input_file_line))
@@ -65,6 +65,7 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
     return 0;
 }
 
+/* Obsolete Function: 
 std::vector<std::string> read_file()
 {
     std::ifstream input_file;
@@ -83,6 +84,7 @@ std::vector<std::string> read_file()
     input_file.close();
     return input_file_line_vec;
 }
+*/
 
 static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp)
 {
@@ -146,34 +148,34 @@ int main()
     std::cout << "=======================================" << "\n\n";
 
     std::map<int, std::string> path_list_map;
-    std::vector<std::string> path_list;
     std::string path = std::filesystem::current_path().generic_string();
     int iteration = 0;
+    std::cout << "[!] Current text files:" << "\n";
     for (const auto& entry : std::filesystem::directory_iterator(path))
     {
-        if ((entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)).find(".txt") != std::string::npos)
+        if ((entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)).find(".txt") != std::string::npos ||
+            (entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)).find(".csv") != std::string::npos)
         {
             std::cout << "[" << iteration << "] " << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << "\n";
-            path_list.push_back(entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1));
             path_list_map.insert(std::make_pair(iteration, entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)));
             iteration++;
         }
     }
 
+    /*
     for (auto const& [key, val] : path_list_map)
     {
-        std::cout << key << ':' << val << std::endl;
+        std::cout << key << ": " << val << std::endl;
     }
+    */
 
     std::cout << "\n" << "> ";
     std::string user_input;
     std::getline(std::cin, user_input);
 
-    std::cout << path_list_map[std::stoi(user_input)] << "\n";
-
     std::ifstream input_file;
-    //input_file.open(path_list_map[std::stoi(user_input)]);
-    input_file.open("Bookmarks.txt");
+    input_file.open(path_list_map[std::stoi(user_input)]);
+    std::cout << "[!] Selection: " << path_list_map[std::stoi(user_input)] << "\n\n";
 
     std::ifstream magic_file;
     magic_file.open("magic_logic.txt");
@@ -207,8 +209,6 @@ int main()
     }
     input_file.close();
 
-    // std::vector<std::string> input_file_line_vec
-    //generate_HTML_file(read_file());
     generate_HTML_file(input_file_line_vec);
 
     std::cout << "[!] END" << "\n";
