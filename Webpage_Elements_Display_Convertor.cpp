@@ -13,11 +13,13 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
 {
     std::vector<std::string> extracted_strings;
     std::ifstream input_file;
+    std::cout << "\n" << "[!] Creating/opening elements_webpage_template.html;" << "\n";
     input_file.open("elements_webpage_template.html");
+    std::cout << "[+] Opened elements_webpage_template.html successfully;" << "\n";
     std::ofstream output_file;
-    std::cout << "\n" << "[!] Creating/opening List.csv;" << "\n"; // << TODO
+    std::cout << "\n" << "[!] Creating/opening elements_list_output.html;" << "\n";
     output_file.open("elements_list_output.html");
-    std::cout << "[+] Opened List.csv successfully;" << "\n\n"; // << TODO
+    std::cout << "[+] Opened elements_list_output.html successfully;" << "\n\n";
     std::string input_file_line;
     int count = 0;
     while (std::getline(input_file, input_file_line))
@@ -178,26 +180,26 @@ int main()
     std::cout << "[!] Selection: " << path_list_map[std::stoi(user_input)] << "\n\n";
 
     std::ifstream magic_file;
-    magic_file.open("magic_logic.txt");
+    magic_file.open("url_detection_logic.txt");
 
     std::vector<std::string> input_file_line_vec;
     std::string input_file_line;
-    std::string magic_logic;
+    std::string url_detection_logic;
 
     while (std::getline(magic_file, input_file_line))
     {
-        magic_logic = input_file_line;
-        std::cout << "Magic Logic: " << magic_logic << "\n";
+        url_detection_logic = input_file_line;
+        std::cout << "URL Detection Logic: " << url_detection_logic << "\n";
     }
     magic_file.close();
 
     int i = 0;
     while (std::getline(input_file, input_file_line))
     {
-        if (input_file_line.find(magic_logic) != std::string::npos)
+        if (input_file_line.find(url_detection_logic) != std::string::npos)
         {
-            input_file_line = input_file_line.substr(input_file_line.find(magic_logic));
-            input_file_line = input_file_line.substr(input_file_line.find(magic_logic), input_file_line.find("\""));
+            input_file_line = input_file_line.substr(input_file_line.find(url_detection_logic));
+            input_file_line = input_file_line.substr(input_file_line.find(url_detection_logic), input_file_line.find("\""));
             std::cout << i << ") " << input_file_line << "\n";
             input_file_line_vec.push_back(input_file_line);
             i++;
