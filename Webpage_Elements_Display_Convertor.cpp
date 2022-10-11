@@ -175,6 +175,15 @@ int main()
     std::string user_input;
     std::getline(std::cin, user_input);
 
+    if (std::stoi(user_input) > iteration - 1)
+    {
+        std::cout << "[-] Invalid Selection" << "\n\n";
+        std::cout << "[!] END" << "\n";
+        std::cout << "[!] Exiting..." << "\n\n";
+        std::cin.get();
+        return 0;
+    }
+
     std::ifstream input_file;
     input_file.open(path_list_map[std::stoi(user_input)]);
     std::cout << "[!] Selection: " << path_list_map[std::stoi(user_input)] << "\n\n";
