@@ -175,6 +175,14 @@ int main()
     std::string user_input;
     std::getline(std::cin, user_input);
 
+    if (user_input.find_first_not_of("0123456789") != std::string::npos || user_input.empty())
+    {
+        std::cout << "[-] Invalid Selection" << "\n\n";
+        std::cout << "[!] END" << "\n";
+        std::cout << "[!] Exiting..." << "\n\n";
+        std::cin.get();
+        return 0;
+    }
     if (std::stoi(user_input) > iteration - 1)
     {
         std::cout << "[-] Invalid Selection" << "\n\n";
