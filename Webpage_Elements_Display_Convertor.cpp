@@ -170,26 +170,24 @@ int main()
         std::cout << key << ": " << val << std::endl;
     }
     */
-
-    std::cout << "\n" << "> ";
     std::string user_input;
-    std::getline(std::cin, user_input);
+    while (true)
+    {
+        std::cout << "\n" << "> ";
+        std::getline(std::cin, user_input);
 
-    if (user_input.find_first_not_of("0123456789") != std::string::npos || user_input.empty())
-    {
-        std::cout << "[-] Invalid Selection" << "\n\n";
-        std::cout << "[!] END" << "\n";
-        std::cout << "[!] Exiting..." << "\n\n";
-        std::cin.get();
-        return 0;
-    }
-    if (std::stoi(user_input) > iteration - 1)
-    {
-        std::cout << "[-] Invalid Selection" << "\n\n";
-        std::cout << "[!] END" << "\n";
-        std::cout << "[!] Exiting..." << "\n\n";
-        std::cin.get();
-        return 0;
+        if (user_input.find_first_not_of("0123456789") != std::string::npos || user_input.empty())
+        {
+            std::cout << "[-] Invalid input - Please try again" << "\n";
+        }
+        else if (std::stoi(user_input) > iteration - 1)
+        {
+            std::cout << "[-] Invalid input - Please try again" << "\n";
+        }
+        else
+        {
+            break;
+        }
     }
 
     std::ifstream input_file;
