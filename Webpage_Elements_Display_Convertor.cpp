@@ -30,7 +30,7 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
             output_file << input_file_line << "\n";
             for (int i = 0; i <= input_file_line_vec.size() - 1; i++)
             {
-                std::cout << count << "|" << input_file_line_vec.size() << ") ";
+                std::cout << "[" << count << "|" << input_file_line_vec.size() << "] ";
                 count++;
                 extracted_strings = html_extractor(input_file_line_vec[i].c_str());
                 if (extracted_strings[0] == "Nil")
@@ -173,7 +173,8 @@ int main()
     std::string user_input;
     while (true)
     {
-        std::cout << "\n" << "> ";
+        std::cout << "\n" << "[=] Make Selection: " << "[0-" << iteration - 1 << "]" << "\n";
+        std::cout << "> ";
         std::getline(std::cin, user_input);
 
         if (user_input.find_first_not_of("0123456789") != std::string::npos || user_input.empty())
