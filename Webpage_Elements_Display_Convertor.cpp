@@ -33,7 +33,7 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
                 std::cout << "[" << count << "|" << input_file_line_vec.size() << "] ";
                 count++;
                 extracted_strings = html_extractor(input_file_line_vec[i].c_str());
-                if (extracted_strings[0] == "Nil")
+                if (extracted_strings[0] == "N/A")
                 {
                     continue;
                 }
@@ -129,13 +129,12 @@ std::vector<std::string> html_extractor(const char* target_url)
         std::cout << "\n";
 
         std::vector<std::string> extracted_strings = { target_tag , target_image, target_desc };
-
         return extracted_strings;
     }
     catch (const std::out_of_range& out_of_range)
     {
         std::cerr << "\n" << "\033[4;31m" << "Out_of_range Error : " << out_of_range.what() << "\033[0m" << "\n\n";
-        std::vector<std::string> extracted_strings = { "Nil" , "", "" };
+        std::vector<std::string> extracted_strings = { "N/A" , "", "" };
         return extracted_strings;
     }
 }
