@@ -139,6 +139,45 @@ std::vector<std::string> html_extractor(const char* target_url)
     }
 }
 
+std::vector<std::string> detection(user_input)
+{
+    std::ifstream input_file;
+    input_file.open(path_list_map[std::stoi(user_input)]);
+    std::cout << "[!] Selection: " << path_list_map[std::stoi(user_input)] << "\n\n";
+
+    std::ifstream magic_file;
+    magic_file.open("url_detection_logic.txt");
+
+    std::vector<std::string> input_file_line_vec;
+    std::string input_file_line;
+    std::string url_detection_logic;
+
+    while (std::getline(magic_file, input_file_line))
+    {
+        url_detection_logic = input_file_line;
+        std::cout << "URL Detection Logic: " << url_detection_logic << "\n";
+    }
+    magic_file.close();
+
+    int i = 0;
+    while (std::getline(input_file, input_file_line))
+    {
+        if (input_file_line.find(url_detection_logic) != std::string::npos)
+        {
+            input_file_line = input_file_line.substr(input_file_line.find(url_detection_logic));
+            input_file_line = input_file_line.substr(input_file_line.find(url_detection_logic), input_file_line.find("\""));
+            std::cout << i << ") " << input_file_line << "\n";
+            input_file_line_vec.push_back(input_file_line);
+            i++;
+        }
+        else
+        {
+            std::cout << "[-]" << input_file_line.substr(0, 100) << "\n";
+        }
+    }
+    input_file.close();
+}
+
 int main()
 {
     std::cout << "=======================================" << "\n";
@@ -190,41 +229,7 @@ int main()
         }
     }
 
-    std::ifstream input_file;
-    input_file.open(path_list_map[std::stoi(user_input)]);
-    std::cout << "[!] Selection: " << path_list_map[std::stoi(user_input)] << "\n\n";
-
-    std::ifstream magic_file;
-    magic_file.open("url_detection_logic.txt");
-
-    std::vector<std::string> input_file_line_vec;
-    std::string input_file_line;
-    std::string url_detection_logic;
-
-    while (std::getline(magic_file, input_file_line))
-    {
-        url_detection_logic = input_file_line;
-        std::cout << "URL Detection Logic: " << url_detection_logic << "\n";
-    }
-    magic_file.close();
-
-    int i = 0;
-    while (std::getline(input_file, input_file_line))
-    {
-        if (input_file_line.find(url_detection_logic) != std::string::npos)
-        {
-            input_file_line = input_file_line.substr(input_file_line.find(url_detection_logic));
-            input_file_line = input_file_line.substr(input_file_line.find(url_detection_logic), input_file_line.find("\""));
-            std::cout << i << ") " << input_file_line << "\n";
-            input_file_line_vec.push_back(input_file_line);
-            i++;
-        }
-        else
-        {
-            std::cout << "[-]" << input_file_line.substr(0, 100) << "\n";
-        }
-    }
-    input_file.close();
+    detection(user_input);
 
     generate_HTML_file(input_file_line_vec);
 
@@ -232,8 +237,4 @@ int main()
     std::cout << "[!] Exiting..." << "\n\n";
     std::cin.get();
     return 0;
-
-    // 1) Read text file with URLS
-    // 2) Iterate through each URL to collect page elements.
-    // 3) Generate HTML page with sorted elements.
 }
