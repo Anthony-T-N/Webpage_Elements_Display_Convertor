@@ -139,7 +139,7 @@ std::vector<std::string> html_extractor(const char* target_url)
     }
 }
 
-std::vector<std::string> detection(user_input)
+std::vector<std::string> url_detection(std::map<int, std::string> path_list_map, std::string user_input)
 {
     std::ifstream input_file;
     input_file.open(path_list_map[std::stoi(user_input)]);
@@ -176,6 +176,7 @@ std::vector<std::string> detection(user_input)
         }
     }
     input_file.close();
+    return input_file_line_vec;
 }
 
 int main()
@@ -228,10 +229,8 @@ int main()
             break;
         }
     }
-
-    detection(user_input);
-
-    generate_HTML_file(input_file_line_vec);
+ 
+    generate_HTML_file(url_detection(path_list_map, user_input));
 
     std::cout << "[!] END" << "\n";
     std::cout << "[!] Exiting..." << "\n\n";
