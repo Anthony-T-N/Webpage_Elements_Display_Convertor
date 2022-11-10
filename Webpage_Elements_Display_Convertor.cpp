@@ -155,7 +155,7 @@ std::vector<std::string> url_detection(std::map<int, std::string> path_list_map,
     while (std::getline(magic_file, input_file_line))
     {
         url_detection_logic = input_file_line;
-        std::cout << "URL Detection Logic: " << url_detection_logic << "\n";
+        std::cout << "[!] URL Detection Logic: " << url_detection_logic << "\n";
     }
     magic_file.close();
 
@@ -187,6 +187,12 @@ int main()
     std::cout << "- Created By: Anthony-T-N." << "\n";
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
+
+    // Prerequisites
+    // elements_webpage_template.html
+    // url_detection_logic.txt
+    std::cout << std::filesystem::exists("elements_webpage_template.html");
+    std::cout << std::filesystem::exists("url_detection_logic.txt");
 
     std::map<int, std::string> path_list_map;
     std::string path = std::filesystem::current_path().generic_string();
