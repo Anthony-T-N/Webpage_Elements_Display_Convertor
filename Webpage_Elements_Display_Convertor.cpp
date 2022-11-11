@@ -188,11 +188,14 @@ int main()
     std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
 
-    // Prerequisites
-    // elements_webpage_template.html
-    // url_detection_logic.txt
-    std::cout << std::filesystem::exists("elements_webpage_template.html");
-    std::cout << std::filesystem::exists("url_detection_logic.txt");
+    if (std::filesystem::exists("elements_webpage_template.html") != 1)
+    {
+        std::cout << "[-] elements_webpage_template.html" << "\n";
+    }
+    if (std::filesystem::exists("url_detection_logic.txt") != 1)
+    {
+        std::cout << "[-] url_detection_logic.txt" << "\n";
+    }
 
     std::map<int, std::string> path_list_map;
     std::string path = std::filesystem::current_path().generic_string();
