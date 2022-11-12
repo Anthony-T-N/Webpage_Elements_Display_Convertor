@@ -47,7 +47,7 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
                     color = "#273746";
                 }
                 output_file << "<div class=\"column\" style=\"background-color:" + color + ";display:flex;\">" << "\n"
-                    << "<img style=\"margin-right:10px;display:block;height:445px;\" src=\"" + extracted_strings[1] + "\">" << "\n" 
+                    << "<a href=" + input_file_line_vec[i] + ">" + "<img style=\"margin-right:10px;display:block;height:445px;\" src=\"" + extracted_strings[1] + "\"></a>" << "\n"
                     << "<div class=\"text\"><h3 style=\"color:white;\"><a href=" + input_file_line_vec[i] + ">" + extracted_strings[0] + "</a></h2><p style=\"color:white;\">" + extracted_strings[2] + "</p>" << "\n" 
                     << "</div>" << "\n" << "</div>" << "\n\n";
             }
