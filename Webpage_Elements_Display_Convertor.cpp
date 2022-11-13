@@ -198,6 +198,7 @@ int main()
     }
 
     std::map<int, std::string> path_list_map;
+    std::vector<std::string> url_list;
     std::string path = std::filesystem::current_path().generic_string();
     int iteration = 0;
     std::cout << "[!] Current text files:" << "\n";
@@ -208,6 +209,7 @@ int main()
         {
             std::cout << "[" << iteration << "] " << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << "\n";
             path_list_map.insert(std::make_pair(iteration, entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)));
+            url_list.push_back(entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1));
             iteration++;
         }
     }
