@@ -214,6 +214,12 @@ int main()
         }
     }
 
+    std::cout << "url_list" << "\n";
+    for (int i = 0; i < url_list.size() - 1; i++)
+    {
+        std::cout << url_list[i] << "\n";
+    }
+
     /*
     for (auto const& [key, val] : path_list_map)
     {
