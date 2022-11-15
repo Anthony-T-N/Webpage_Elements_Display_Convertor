@@ -145,19 +145,19 @@ std::vector<std::string> url_detection(std::map<int, std::string> path_list_map,
     input_file.open(path_list_map[std::stoi(user_input)]);
     std::cout << "[!] Selection: " << path_list_map[std::stoi(user_input)] << "\n\n";
 
-    std::ifstream magic_file;
-    magic_file.open("url_detection_logic.txt");
+    std::ifstream url_detection_logic_file;
+    url_detection_logic_file.open("url_detection_logic.txt");
 
     std::vector<std::string> input_file_line_vec;
     std::string input_file_line;
     std::string url_detection_logic;
 
-    while (std::getline(magic_file, input_file_line))
+    while (std::getline(url_detection_logic_file, input_file_line))
     {
         url_detection_logic = input_file_line;
         std::cout << "[!] URL Detection Logic: " << url_detection_logic << "\n";
     }
-    magic_file.close();
+    url_detection_logic_file.close();
 
     int i = 0;
     while (std::getline(input_file, input_file_line))
