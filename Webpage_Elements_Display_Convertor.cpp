@@ -176,6 +176,12 @@ std::vector<std::string> url_detection(std::map<int, std::string> path_list_map,
         }
     }
     input_file.close();
+
+    std::cout << "url_list" << "\n";
+    for (int i = 0; i < input_file_line_vec.size() - 1; i++)
+    {
+        std::cout << input_file_line_vec[i] << "\n";
+    }
     return input_file_line_vec;
 }
 
@@ -209,16 +215,11 @@ int main()
         {
             std::cout << "[" << iteration << "] " << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << "\n";
             path_list_map.insert(std::make_pair(iteration, entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)));
-            url_list.push_back(entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1));
             iteration++;
         }
     }
 
-    std::cout << "url_list" << "\n";
-    for (int i = 0; i < url_list.size() - 1; i++)
-    {
-        std::cout << url_list[i] << "\n";
-    }
+
 
     /*
     for (auto const& [key, val] : path_list_map)
