@@ -197,10 +197,18 @@ int main()
     if (std::filesystem::exists("elements_webpage_template.html") != 1)
     {
         std::cout << "[-] elements_webpage_template.html" << "\n";
+        std::cout << "[!] END" << "\n";
+        std::cout << "[!] Exiting..." << "\n\n";
+        std::cin.get();
+        return 0;
     }
     if (std::filesystem::exists("url_detection_logic.txt") != 1)
     {
         std::cout << "[-] url_detection_logic.txt" << "\n";
+        std::cout << "[!] END" << "\n";
+        std::cout << "[!] Exiting..." << "\n\n";
+        std::cin.get();
+        return 0;
     }
 
     std::map<int, std::string> path_list_map;
@@ -211,16 +219,14 @@ int main()
     for (const auto& entry : std::filesystem::directory_iterator(path))
     {
         if ((entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)).find(".txt") != std::string::npos ||
-            (entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)).find(".csv") != std::string::npos)
+            (entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)).find(".csv") != std::string::npos ||
+            (entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)).find(".html") != std::string::npos)
         {
             std::cout << "[" << iteration << "] " << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << "\n";
             path_list_map.insert(std::make_pair(iteration, entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)));
             iteration++;
         }
     }
-
-
-
     /*
     for (auto const& [key, val] : path_list_map)
     {
