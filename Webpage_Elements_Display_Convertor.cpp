@@ -9,6 +9,18 @@
 
 std::vector<std::string> html_extractor(const char* target_url);
 
+std::string get_current_date()
+{
+    time_t rawtime;
+    struct tm* timeinfo;
+    char buffer[80];
+    time(&rawtime);
+    // Error C4996 'localtime': This function or variable may be unsafe.Consider using localtime_s instead.To disable deprecation, use _CRT_SECURE_NO_WARNINGS.
+    timeinfo = localtime(&rawtime);
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d", timeinfo);
+    return buffer;
+}
+
 int generate_HTML_file(std::vector<std::string> input_file_line_vec)
 {
     std::vector<std::string> extracted_strings;
