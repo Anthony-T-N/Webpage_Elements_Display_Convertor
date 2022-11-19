@@ -9,6 +9,8 @@
 
 std::vector<std::string> html_extractor(const char* target_url);
 
+#pragma warning(disable:4996)
+
 std::string get_current_date()
 {
     time_t rawtime;
@@ -30,7 +32,7 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
     std::cout << "[+] Opened elements_webpage_template.html successfully;" << "\n";
     std::ofstream output_file;
     std::cout << "\n" << "[!] Creating/opening elements_list_output.html;" << "\n";
-    output_file.open("elements_list_output.html");
+    output_file.open("elements_list_output-" + get_current_date() + ".html");
     std::cout << "[+] Opened elements_list_output.html successfully;" << "\n\n";
     std::string input_file_line;
     int count = 0;
