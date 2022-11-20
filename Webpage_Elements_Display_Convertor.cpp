@@ -32,7 +32,7 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
     std::cout << "[+] Opened elements_webpage_template.html successfully;" << "\n";
     std::ofstream output_file;
     std::cout << "\n" << "[!] Creating/opening elements_list_output.html;" << "\n";
-    output_file.open("elements_list_output-" + get_current_date() + ".html");
+    output_file.open("elements_list_output-(" + get_current_date() + ").html");
     std::cout << "[+] Opened elements_list_output.html successfully;" << "\n\n";
     std::string input_file_line;
     int count = 0;
@@ -60,6 +60,11 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
                 {
                     color = "#273746";
                 }
+                
+                // 
+
+                // #ba000a for completed urls.
+
                 output_file << "<div class=\"column\" style=\"background-color:" + color + ";display:flex;\">" << "\n"
                     << "<a href=" + input_file_line_vec[i] + ">" + "<img style=\"margin-right:10px;display:block;height:445px;\" src=\"" + extracted_strings[1] + "\"></a>" << "\n"
                     << "<div class=\"text\"><h3 style=\"color:white;\"><a href=" + input_file_line_vec[i] + ">" + extracted_strings[0] + "</a></h2><p style=\"color:white;\">" + extracted_strings[2] + "</p>" << "\n" 
