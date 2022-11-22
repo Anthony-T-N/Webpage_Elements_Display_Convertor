@@ -241,16 +241,13 @@ int main()
             (entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)).find(".csv") != std::string::npos ||
             (entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)).find(".html") != std::string::npos)
         {
-            std::cout << "[" << iteration << "] " << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << "\n";
-            path_list_map.insert(std::make_pair(iteration, entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)));
-            iteration++;
-
             std::ifstream in_file(entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1), std::ios::binary);
             in_file.seekg(0, std::ios::end);
-            int file_size = in_file.tellg();
-            std::cout << "Size of the file is" << " " << file_size << " " << "bytes";
+            double file_size = in_file.tellg();
 
-
+            std::cout << "[" << iteration << "] " << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << " | " << (file_size / 1048576) << "MB" << "\n";
+            path_list_map.insert(std::make_pair(iteration, entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)));
+            iteration++;
         }
     }
     /*
