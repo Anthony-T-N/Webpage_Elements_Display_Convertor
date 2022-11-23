@@ -210,7 +210,7 @@ int main()
     std::cout << "- Webpage_Elements_Display_Convertor console application" << "\n";
     std::cout << "- Console Application Version: 1.0" << "\n";
     std::cout << "- Created By: Anthony-T-N." << "\n";
-    std::cout << "- Current location of executable: " << std::filesystem::current_path() << "\n";
+    std::cout << "- Executable Location: " << std::filesystem::current_path() << "\n";
     std::cout << "=======================================" << "\n\n";
 
     if (std::filesystem::exists("elements_webpage_template.html") != 1)
@@ -241,11 +241,13 @@ int main()
             (entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)).find(".csv") != std::string::npos ||
             (entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)).find(".html") != std::string::npos)
         {
+            /*
             std::ifstream in_file(entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1), std::ios::binary);
             in_file.seekg(0, std::ios::end);
             double file_size = in_file.tellg();
-
-            std::cout << "[" << iteration << "] " << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << " | " << (file_size / 1048576) << "MB" << "\n";
+            // << " | " << (file_size / 1048576) << "MB"
+            */
+            std::cout << "[" << iteration << "] " << entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1) << "\n";
             path_list_map.insert(std::make_pair(iteration, entry.path().generic_string().substr(entry.path().generic_string().find_last_of("//") + 1)));
             iteration++;
         }
@@ -279,7 +281,7 @@ int main()
  
     generate_HTML_file(url_detection(path_list_map, user_input));
 
-    std::cout << "[!] END" << "\n";
+    std::cout << "\n" << "[!] END" << "\n";
     std::cout << "[!] Exiting..." << "\n\n";
     std::cin.get();
     return 0;
