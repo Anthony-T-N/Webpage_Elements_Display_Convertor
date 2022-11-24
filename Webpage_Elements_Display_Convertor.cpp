@@ -162,7 +162,7 @@ std::vector<std::string> url_detection(std::map<int, std::string> path_list_map,
 {
     std::ifstream input_file;
     input_file.open(path_list_map[std::stoi(user_input)]);
-    std::cout << "[!] Selection: " << path_list_map[std::stoi(user_input)] << "\n\n";
+    std::cout << "\n" << "[!] Selection: " << path_list_map[std::stoi(user_input)] << "\n\n";
 
     std::ifstream url_detection_logic_file;
     url_detection_logic_file.open("url_detection_logic.txt");
@@ -196,11 +196,13 @@ std::vector<std::string> url_detection(std::map<int, std::string> path_list_map,
     }
     input_file.close();
 
-    std::cout << "url_list" << "\n";
+    /*
+    std::cout << "\n" << "url_list" << "\n";
     for (int i = 0; i < input_file_line_vec.size() - 1; i++)
     {
         std::cout << input_file_line_vec[i] << "\n";
     }
+    */
     return input_file_line_vec;
 }
 
