@@ -44,7 +44,7 @@ int generate_HTML_file(std::vector<std::string> input_file_line_vec)
             output_file << input_file_line << "\n";
             for (int i = 0; i <= input_file_line_vec.size() - 1; i++)
             {
-                std::cout << "[" << count << "|" << input_file_line_vec.size() << "] ";
+                std::cout << "[" << count << "|" << input_file_line_vec.size() - 1 << "] ";
                 count++;
                 extracted_strings = html_extractor(input_file_line_vec[i].c_str());
                 if (extracted_strings[0] == "N/A")
@@ -196,13 +196,6 @@ std::vector<std::string> url_detection(std::map<int, std::string> path_list_map,
     }
     input_file.close();
 
-    /*
-    std::cout << "\n" << "url_list" << "\n";
-    for (int i = 0; i < input_file_line_vec.size() - 1; i++)
-    {
-        std::cout << input_file_line_vec[i] << "\n";
-    }
-    */
     return input_file_line_vec;
 }
 
